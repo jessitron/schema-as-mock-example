@@ -27,8 +27,6 @@
 (defn a-click-preceding [order] {:who (:who order) :when (an-hour-before (:when order))})
 (defn a-timestamp-preceding [date] (time/minus date (time/minutes 5)))
 
-(defn conversion-period-for [order] (time/minus (:when order) conversion-period))
-
 (def NotLessThanAnHourAgo (s/named (s/both org.joda.time.DateTime (s/pred hour-ago?)) "at least an hour ago"))
 
 (deftest basic-conversion-test
