@@ -15,11 +15,10 @@
 (declare notice-conversions)
 
 (defn calculate-conversions-since [start-date]
-  (let [end-date (time/now)
+  (let [end-date (time/minus (time/now) (time/hours 1))
         orders (fetch-orders start-date end-date)]
     (for [o orders]
-      (notice-conversions o (fetch-clicks start-date end-date (:who o)))))
-  [])
+      (notice-conversions o (fetch-clicks start-date end-date (:who o))))))
 
 (defn- notice-conversions [orders clicks]
   [])
