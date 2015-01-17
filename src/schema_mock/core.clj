@@ -18,9 +18,11 @@
 (defn calculate-conversions-since [start-date]
   (let [end-date (time/minus (time/now) (time/hours 1))
         orders (fetch-orders start-date end-date)]
-    (for [o orders]
-      (let [clicks (fetch-clicks (conversion-period-for o) (:when o) (:who o))]
-        (notice-conversions o clicks)))))
+    (concat
+      (for [o orders]
+        (let [clicks (fetch-clicks (conversion-period-for o) (:when o) (:who o))]
+          (notice-conversions o clicks))))))
 
-(defn- notice-conversions [orders clicks]
-  [])
+(defn- notice-conversions [order clicks]
+  ;; dummy implementation: stupid-easiest way to green
+  [{:click (first clicks) :outcome order}])
