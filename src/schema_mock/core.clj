@@ -12,5 +12,14 @@
   ;; go to the database and get clicks between these dates for this customer
   [])
 
+(declare notice-conversions)
+
 (defn calculate-conversions-since [start-date]
+  (let [end-date (time/now)
+        orders (fetch-orders start-date end-date)]
+    (for [o orders]
+      (notice-conversions o (fetch-clicks start-date end-date (:who o)))))
+  [])
+
+(defn- notice-conversions [orders clicks]
   [])
