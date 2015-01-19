@@ -27,7 +27,7 @@
 (defn a-click-preceding [order] {:who (:who order) :when (an-hour-before (:when order))})
 (defn a-timestamp-preceding [date] (time/minus date (time/minutes 5)))
 
-(def NotLessThanAnHourAgo (s/named (s/both org.joda.time.DateTime (s/pred hour-ago?)) "at least an hour ago"))
+(def AtLeastAnHourAgo (s/named (s/both org.joda.time.DateTime (s/pred hour-ago?)) "at least an hour ago"))
 
 (deftest basic-conversion-test
   (testing "an order preceded by an ad click is a conversion"
@@ -37,7 +37,7 @@
           starting-date (a-timestamp-preceding (:when order)) 
           expected-conversion {:click click :outcome order}]
       (with-redefs [fetch-orders (s/fn [s :- (s/eq starting-date)
-                                        e :- NotLessThanAnHourAgo]
+                                        e :- AtLeastAnHourAgo]
                                    [order])
                     fetch-clicks (s/fn [start :- (s/eq (conversion-period-for order))
                                         end :- (s/eq (:when order))
