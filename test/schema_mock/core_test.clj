@@ -29,7 +29,9 @@
 
 (def AtLeastAnHourAgo (s/named (s/both org.joda.time.DateTime (s/pred hour-ago?)) "at least an hour ago"))
 
-(deftest basic-conversion-test
+(defn run-test [function-under-test input expected-result] (is (= expected-result (apply function-under-test input))))  
+
+(deftest test-calculate-conversions-since
   (testing "an order preceded by an ad click is a conversion"
     (let [customer a-customer
           order (an-order-from customer)
@@ -43,6 +45,5 @@
                                         end :- (s/eq (:when order))
                                         c :- (s/eq customer)]
                                    [click])]
-        (let [result (calculate-conversions-since starting-date)]
-          (is (= [expected-conversion] result)))))))
+        (run-test calculate-conversions-since [starting-date] [expected-conversion])))))
 
