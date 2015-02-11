@@ -10,10 +10,10 @@
 
 (use-fixtures :once schema.test/validate-schemas)
 
-(defn an-hour-before [date] (time/minus date (time/hours 1)))
-(defn gte  [a b]
+(defn- an-hour-before [date] (time/minus date (time/hours 1)))
+(defn- gte  [a b]
     (>=  (compare a b) 0))
-(defn hour-ago? [t] (gte (an-hour-before (time/now)) t))   "at least an hour ago"  
+(defn- hour-ago? [t] (gte (an-hour-before (time/now)) t))   "at least an hour ago"  
 
 ;; it would be my preference to generate these, but it's
 ;; simpler for most people to read this way.
